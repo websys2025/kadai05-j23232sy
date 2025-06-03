@@ -4,9 +4,9 @@
     <title>演習課題5-2：外部APIの呼び出しテスト</title>
 </head>
 <body>
-    <h1 id="msg">何かのAPI</h1>
+    <h1 id="msg">PokeAPI</h1>
     <form name="apiform"><p>
-        何かのフォーム：<input type="text" name="form_data">
+        図鑑番号：<input type="text" name="poke_id">
         <button type="button" id="btn1" onclick="some_api(this.form)">実行</button>
     </p></form>
     
@@ -14,7 +14,12 @@
     <script>
         async function some_api(myForm) {
             // ここにコードを書く
-            document.getElementById("result").innerHTML += myForm.form_data.value+"<br />";
+            const endpoint ="https://pokeapi.co/api/v2/pokemon";
+            const aRes = await fetch("https://pokeapi.co/api/v2/pokemon/"+myForm.poke_id.value);
+            const data = await aRes.json();
+            const poke_id=data.id;
+            const poke_name=data.name;
+            document.getElementById("result").innerHTML += `ID: ${poke_id} <br> 名前: ${poke_name}<br>`;
             document.apiform.reset();
         }
     </script>
